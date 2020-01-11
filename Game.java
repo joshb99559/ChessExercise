@@ -28,9 +28,10 @@ public class Game {
 
             //Get move from player
             boolean validMoveSelection = false;
+            String placeToMove = null;
             while (!validMoveSelection) {
                 System.out.printf("%s, where would you like to move?", (turn ? "Black" : "White"));
-                String placeToMove = input.nextLine();
+                placeToMove = input.nextLine();
 
                 validMoveSelection = checkValidMoveInput(board, pieceToMove, placeToMove, turn);
                 if (!validMoveSelection) {
@@ -39,7 +40,7 @@ public class Game {
             }
 
             //Move piece
-
+            board.movePiece(pieceToMove, placeToMove);
             //Check if game over
 
             isGameOver = checkGameOver();
@@ -208,15 +209,62 @@ public class Game {
             case WKING:
                 break;
             case BPAWN:
-                break;
+                if (initialCol != desiredCol) {
+                    //check if taking piece
+                    if (desiredRow != initialRow + 1) {
+                        return false;
+                    }
+                    if ((desiredCol != initialCol + 1) && (desiredCol != initialCol - 1)) {
+                        return false;
+                    }
+                    if (board.getPiece(desiredRow, desiredCol).toString().toCharArray()[0] == 'W') {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    if (desiredRow == initialRow + 1) {
+                        if (board.getPiece(desiredRow, desiredCol).equals(Piece.EMPTY)) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    } else {
+                        return false;
+                    }
+                }
             case WPAWN:
-                break;
+                System.out.println("ENTERED WPAWN");
+                if (initialCol != desiredCol) {
+                    //check if taking piece
+                    if (desiredRow != initialRow - 1) {
+                        return false;
+                    }
+                    if ((desiredCol != initialCol + 1) && (desiredCol != initialCol - 1)) {
+                        return false;
+                    }
+                    if (board.getPiece(desiredRow, desiredCol).toString().toCharArray()[0] == 'B') {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    if (desiredRow == initialRow - 1) {
+                        if (board.getPiece(desiredRow, desiredCol).equals(Piece.EMPTY)) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    } else {
+                        return false;
+                    }
+                }
         }
 
         return false;
     }
 
     public static boolean checkGameOver() {
-        return true;
+        return false;
     }
 }

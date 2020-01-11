@@ -67,4 +67,14 @@ class Board {
     public Piece getPiece(int row, int col) {
         return board[row][col];
     }
+
+    public void movePiece(String pieceToMove, String placeToMove) {
+        int initialRow = Character.getNumericValue(pieceToMove.toCharArray()[0]);
+        int initialCol = Character.getNumericValue(pieceToMove.toCharArray()[1]);
+        int desiredRow = Character.getNumericValue(placeToMove.toCharArray()[0]);
+        int desiredCol = Character.getNumericValue(placeToMove.toCharArray()[1]);
+
+        board[desiredRow][desiredCol] = board[initialRow][initialCol];
+        board[initialRow][initialCol] = Piece.EMPTY;
+    }
 }
